@@ -14,18 +14,42 @@
 	};
 	const url = `https://${dbID}-${region}.${midURL}/namespaces/${ns}/collections/${collection}`;
 
-	const deleteUrl = url + '/8f0c8679-9d4f-4520-a424-c55f5bc2dba7';
-	// export const deleteFeedback = fetch(url, { method: 'GET', headers })
-	// 	.then(function (response) {
-	// 		if (!response.ok) {
-	// 			throw Error(`${response.status}`);
-	// 		}
-	// 		console.log('Delete status:', response.status);
-	// 		return response.status != 204 ? response.json() : {};
-	// 	})
-	// 	.catch((error) => {
-	// 		console.log(error);
-	// 	});
+	export const deleteFeedback = (id) => {
+		getFeedbackById(id)
+			.then(function (documentID) {
+				const deleteUrl = url + '/' + documentID;
+				return deleteUrl;
+			})
+			.then(function (deleteUrl) {
+				fetch(deleteUrl, { method: 'DELETE', headers })
+					.then(function (response) {
+						if (!response.ok) {
+							throw Error(`${response.status}`);
+						}
+						console.log('Delete status:', response.status);
+						return response.status != 204 ? response.json() : {};
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			});
+	};
 
-	export const deleteFeedback = () => console.log('hei på deg');
+	async function getFeedbackById(id) {
+		const getUrl = url + '?where=%7B%22id%22%3A%7B%22%24eq%22%3A%22' + id + '%22%7D%7D';
+		return fetch(getUrl, { method: 'GET', headers })
+			.then(function (response) {
+				if (!response.ok) {
+					throw Error(`${response.status}`);
+				}
+				console.log('Status:', response.status);
+				return response.json();
+			})
+			.then(function (response) {
+				return Object.keys(response.data)[0];
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
 </script>
