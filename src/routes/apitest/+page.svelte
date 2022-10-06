@@ -1,5 +1,5 @@
 <script>
-	import { deleteFeedback } from './Api.svelte';
+	import { deleteFeedback } from '$lib/api';
 	export let data;
 </script>
 

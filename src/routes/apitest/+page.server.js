@@ -1,4 +1,4 @@
-import * as api from '$lib/server/api';
+import * as api from '$lib/api';
 
 export async function load() {
 	const response = await api.getFeedback;
