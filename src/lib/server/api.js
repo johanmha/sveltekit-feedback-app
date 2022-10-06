@@ -11,6 +11,7 @@ const headers = {
 	'X-Cassandra-Token': token
 };
 const url = `https://${dbID}-${region}.${midURL}/namespaces/${ns}/collections/${collection}`;
+const queryParams = '?page-size=20';
 export const testApi = () => {
 	const response = {
 		a: '1',
@@ -21,7 +22,7 @@ export const testApi = () => {
 
 export const getCatFact = fetch('https://catfact.ninja/fact').then((response) => response.json());
 
-export const getFeedback = fetch(url, { method: 'GET', headers })
+export const getFeedback = fetch(url + queryParams, { method: 'GET', headers })
 	.then(function (response) {
 		if (!response.ok) {
 			throw Error(`${response.status}, ${response.statusText}`);
